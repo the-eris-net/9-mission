@@ -9,8 +9,6 @@
 html,
 body {
     height: 100%;
-    color: white;
-    font-weight: bold;
 }
 
 .calculator-container {
@@ -24,8 +22,6 @@ body {
 }
 
 .display {
-    display: flex;
-    flex-direction: column;
     height: 80px;
     padding: 8px;
 }
@@ -33,8 +29,6 @@ body {
 .buttons {
     background-color: #505050;
     flex: 1;
-    display: flex;
-    flex-direction: column;
 }
 
 .circle {
@@ -55,58 +49,10 @@ body {
     background-color: #28c832;
 }
 
-.m8 {
+.m8{
     margin-right: 8px;
 }
 
-.display-header {
+.display-header{
     display: flex;
-}
-
-.display-body {
-    text-align: right;
-    height: 100%;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    font-size: 2rem;
-}
-
-.button-row {
-    flex: 1;
-    display: flex;
-}
-
-.button {
-    flex: 1;
-    background-color: #505050;
-    border: 0.5px solid #281e1e;
-    user-select: none;
-    /*드래그 방지*/
-    /*center start*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*center end*/
-}
-
-.function {
-    background-color: #372d2d;
-}
-
-.operator {
-    background-color: #ff8c0f;
-}
-
-.zero {
-    /* flex를 사용하지 않는 이유는 box-sizing을 사용하지 않는 이유는 box-sizing은 비율을 계산할 때 border를 무시하기 때문에*/
-    min-width: 50%;
-}
-
-.button:hover {
-    filter: invert(25%);
-}
-
-.button:active {
-    filter: invert(100%);
 }
