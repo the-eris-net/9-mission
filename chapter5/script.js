@@ -64,7 +64,7 @@ function btnClick(event) {
 }
 
 function btnClickNumber(state, currentValue, number) {
-    if (Number(number) === 0 || state.reset) {
+    if ((Number(number) === 0 && !hasDot(number)) || state.reset) {
         return {
             ...state,
             secondOperand: currentValue,
@@ -78,10 +78,14 @@ function btnClickNumber(state, currentValue, number) {
 }
 
 function btnClickDot(state, number) {
-    if (!number.includes('.')) {
+    if (!hasDot(number)) {
         number += '.';
     }
     return { ...state, secondOperand: number };
+}
+
+function hasDot(number) {
+    return number.includes('.');
 }
 
 function btnClickFunction(state, fn) {
@@ -89,7 +93,7 @@ function btnClickFunction(state, fn) {
         case 'C':
             return {
                 ...state,
-                firstOperand: 0
+                secondOperand: 0
             }
         default:
             return {
