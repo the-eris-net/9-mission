@@ -103,7 +103,7 @@ function btnClickFunction(state, fn) {
         case '%':
             return {
                 ...state,
-                firstOperand: `${Number(state.firstOperand)/100}`
+                firstOperand: `${Number(state.firstOperand) / 100}`
             }
         default:
             return {
@@ -139,6 +139,17 @@ function btnClickOperatorIfOperatorIsEqual(state, currentNumber) {
 }
 
 function btnClickOperatorIfOperatorIsNotEqual(state, currentNumber) {
+    if (state.operator !== '=' && state.operator !== null) {
+        return {
+            ...state,
+            firstOperand: Number(calculate(Number(state.secondOperand),
+                state.operator,
+                Number(currentNumber)).toFixed(2)),
+            secondOperand: Number(calculate(Number(state.secondOperand),
+                state.operator,
+                Number(currentNumber)).toFixed(2)),
+        };
+    }
     return {
         ...state,
         secondOperand: currentNumber

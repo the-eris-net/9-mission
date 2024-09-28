@@ -45,7 +45,7 @@ function btnClickDot() {
     }
 }
 
-function hasDot(){
+function hasDot() {
     return resultElement.textContent.includes('.');
 }
 
@@ -74,7 +74,7 @@ function btnClickOperatorByOperatorIsEqual(op) {
     btnClickOperatorIfOperatorIsNotEqual();
 }
 
-function btnClickOperatorIfOperatorIsEqual(){
+function btnClickOperatorIfOperatorIsEqual() {
     secondOperand = resultElement.textContent;
     // firstOperandOrigin = calculate(Number(firstOperand), operator, Number(secondOperand));
     // firstOperandRound2 = calculate(Number(firstOperand), operator, Number(secondOperand)).toFixed(2);
@@ -82,8 +82,13 @@ function btnClickOperatorIfOperatorIsEqual(){
     // console.log(firstOperandOrigin, firstOperandRound2);
 }
 
-function btnClickOperatorIfOperatorIsNotEqual(){
-    firstOperand = resultElement.textContent;
+function btnClickOperatorIfOperatorIsNotEqual() {
+    if (firstOperand === null) {
+        firstOperand = resultElement.textContent;
+    }
+    if (operator !== '=' && operator !== null) {
+        btnClickOperatorIfOperatorIsEqual();
+    }
 }
 
 function calculate(firstOperand, operator, secondOperand) {
