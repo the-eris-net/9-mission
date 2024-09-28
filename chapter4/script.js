@@ -76,7 +76,6 @@ function btnClickOperatorIfOperatorIsEqual(){
     // firstOperandRound2 = calculate(Number(firstOperand), operator, Number(secondOperand)).toFixed(2);
     firstOperand = Number(calculate(Number(firstOperand), operator, Number(secondOperand)).toFixed(2));
     // console.log(firstOperandOrigin, firstOperandRound2);
-    secondOperand = null;
 }
 
 function btnClickOperatorIfOperatorIsNotEqual(){
