@@ -1,7 +1,7 @@
 const resultElement = document.querySelector('.display-body > span');
 
 let state = {
-    firstOperand: null,
+    firstOperand: 0,
     operator: null,
     secondOperand: null,
     reset: false,
@@ -34,7 +34,7 @@ function getState(state, number, currentValue, btnType) {
 }
 
 function display(state) {
-    resultElement.textContent = state.secondOperand;
+    resultElement.textContent = state.firstOperand;
 }
 
 function getBtnType(classList) {
@@ -67,13 +67,13 @@ function btnClickNumber(state, currentValue, number) {
     if ((Number(number) === 0 && !hasDot(number)) || state.reset) {
         return {
             ...state,
-            secondOperand: currentValue,
+            firstOperand: currentValue,
             reset: false
         };
     }
     return {
         ...state,
-        secondOperand: number + currentValue
+        firstOperand: number + currentValue
     }
 }
 
@@ -81,7 +81,7 @@ function btnClickDot(state, number) {
     if (!hasDot(number)) {
         number += '.';
     }
-    return { ...state, secondOperand: number };
+    return { ...state, firstOperand: number };
 }
 
 function hasDot(number) {
@@ -93,7 +93,17 @@ function btnClickFunction(state, fn) {
         case 'C':
             return {
                 ...state,
-                secondOperand: 0
+                firstOperand: 0
+            }
+        case '±':
+            return {
+                ...state,
+                firstOperand: -state.firstOperand
+            }
+        case '%':
+            return {
+                ...state,
+                firstOperand: `${Number(state.firstOperand)/100}`
             }
         default:
             return {
@@ -121,17 +131,17 @@ function btnClickOperatorByOperatorIsEqual(state, operator, currentNumber) {
 function btnClickOperatorIfOperatorIsEqual(state, currentNumber) {
     return {
         ...state,
-        secondOperand: Number(calculate(Number(state.firstOperand),
+        firstOperand: Number(calculate(Number(state.secondOperand),
             state.operator,
             Number(currentNumber)).toFixed(2)),
-        firstOperand: currentNumber,
+        secondOperand: currentNumber,
     };
 }
 
 function btnClickOperatorIfOperatorIsNotEqual(state, currentNumber) {
     return {
         ...state,
-        firstOperand: currentNumber
+        secondOperand: currentNumber
     };
 }
 
