@@ -31,7 +31,7 @@ function btnClick(event) {
 }
 
 function btnClickNumber(number) {
-    if (Number(resultElement.textContent) === 0 || reset) {
+    if ((Number(resultElement.textContent) === 0 && !hasDot()) || reset) {
         resultElement.textContent = number;
         reset = false;
         return;
@@ -40,9 +40,13 @@ function btnClickNumber(number) {
 }
 
 function btnClickDot() {
-    if (!resultElement.textContent.includes('.')) {
+    if (!hasDot()) {
         resultElement.textContent += '.'
     }
+}
+
+function hasDot(){
+    return resultElement.textContent.includes('.');
 }
 
 function btnClickFunction(fn) {

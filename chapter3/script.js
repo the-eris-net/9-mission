@@ -19,7 +19,7 @@ function btnClick(event) {
 }
 
 function btnClickNumber(number) {
-    if (Number(resultElement.textContent) === 0) {
+    if ((Number(resultElement.textContent) === 0 && !hasDot())) {
         resultElement.textContent = number;
         return;
     }
@@ -27,9 +27,13 @@ function btnClickNumber(number) {
 }
 
 function btnClickDot() {
-    if (!resultElement.textContent.includes('.')) {
+    if (!hasDot()) {
         resultElement.textContent += '.'
     }
+}
+
+function hasDot(){
+    return resultElement.textContent.includes('.');
 }
 
 function btnClickFunction(operator) {
