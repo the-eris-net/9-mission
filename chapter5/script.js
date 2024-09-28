@@ -1,85 +1,134 @@
 const resultElement = document.querySelector('.display-body > span');
 
-
-let firstOperand = null;
-let operator = null;
-let secondOperand = null;
-let reset = false;
+let state = {
+    firstOperand: null,
+    operator: null,
+    secondOperand: null,
+    reset: false,
+    displayNumber: null,
+}
 
 document.querySelectorAll('.button').forEach((btn) => {
     btn.addEventListener('click', btnClick)
 })
 
+function getData(classList, currentValue, number) {
+    return {
+        number,
+        currentValue,
+        btnType: getBtnType(classList),
+    }
+}
+
+function getState(state, number, currentValue, btnType) {
+    switch (btnType) {
+        case 'number':
+            return { ...btnClickNumber(state, currentValue, number) };
+        case 'dot':
+            return { ...btnClickDot(state, number) };
+        case 'function':
+            return { ...btnClickFunction(state, currentValue) };
+        case 'operator':
+            return { ...btnClickOperator(state, currentValue, number) };
+    }
+}
+
+function display(state) {
+    resultElement.textContent = state.secondOperand;
+}
+
+function getBtnType(classList) {
+    if (Array.from(classList).includes('number')) {
+        return 'number';
+    }
+    if (Array.from(classList).includes('dot')) {
+        return 'dot';
+    }
+    if (Array.from(classList).includes('function')) {
+        return 'function';
+    }
+    if (Array.from(classList).includes('operator')) {
+        return 'operator';
+    }
+    return 'unknown';
+}
+
+
 function btnClick(event) {
-    // event.target은 유사 배열 객체라서 includes가 안되니 배열로 바꿔준다
-    if (Array.from(event.target.classList).includes('number')) {
-        btnClickNumber(event.target.textContent);
-        return;
+    const { number, currentValue, btnType } = getData(event.target.classList,
+        event.target.textContent,
+        resultElement.textContent);
+
+    state = getState(state, number, currentValue, btnType);
+    display(state);
+}
+
+function btnClickNumber(state, currentValue, number) {
+    if (Number(number) === 0 || state.reset) {
+        return {
+            ...state,
+            secondOperand: currentValue,
+            reset: false
+        };
     }
-    if (Array.from(event.target.classList).includes('dot')) {
-        btnClickDot();
-        return;
-    }
-    if (Array.from(event.target.classList).includes('function')) {
-        btnClickFunction(event.target.textContent);
-        return;
-    }
-    if (Array.from(event.target.classList).includes('operator')) {
-        btnClickOperator(event.target.textContent);
-        return;
+    return {
+        ...state,
+        secondOperand: number + currentValue
     }
 }
 
-function btnClickNumber(number) {
-    if (Number(resultElement.textContent) === 0 || reset) {
-        resultElement.textContent = number;
-        reset = false;
-        return;
+function btnClickDot(state, number) {
+    if (!number.includes('.')) {
+        number += '.';
     }
-    resultElement.textContent += number;
+    return { ...state, secondOperand: number };
 }
 
-function btnClickDot() {
-    if (!resultElement.textContent.includes('.')) {
-        resultElement.textContent += '.'
-    }
-}
-
-function btnClickFunction(fn) {
+function btnClickFunction(state, fn) {
     switch (fn) {
         case 'C':
-            resultElement.textContent = 0;
-            break;
+            return {
+                ...state,
+                firstOperand: 0
+            }
         default:
+            return {
+                ...state,
+            }
     }
 }
 
-function btnClickOperator(op) {
-    btnClickOperatorByOperatorIsEqual(op);
-    operator = op;
-    reset = true;
-    resultElement.textContent = firstOperand;
-    console.log(`First Operand: ${firstOperand}\nOperator: ${operator}`);
+function btnClickOperator(state, operator, currentNumber) {
+    state = {
+        ...btnClickOperatorByOperatorIsEqual(state, operator, currentNumber),
+        operator,
+        reset: true
+    };
+    return state;
 }
 
-function btnClickOperatorByOperatorIsEqual(op) {
-    if (op === '=') {
-        btnClickOperatorIfOperatorIsEqual();
-        return;
+function btnClickOperatorByOperatorIsEqual(state, operator, currentNumber) {
+    if (operator === '=') {
+        return btnClickOperatorIfOperatorIsEqual(state, currentNumber);
     }
-    btnClickOperatorIfOperatorIsNotEqual();
+    return btnClickOperatorIfOperatorIsNotEqual(state, currentNumber);
 }
 
-function btnClickOperatorIfOperatorIsEqual(){
-    secondOperand = resultElement.textContent;
-    // firstOperandOrigin = calculate(Number(firstOperand), operator, Number(secondOperand));
-    // firstOperandRound2 = calculate(Number(firstOperand), operator, Number(secondOperand)).toFixed(2);
-    firstOperand = Number(calculate(Number(firstOperand), operator, Number(secondOperand)).toFixed(2));
-    // console.log(firstOperandOrigin, firstOperandRound2);
+function btnClickOperatorIfOperatorIsEqual(state, currentNumber) {
+    return {
+        ...state,
+        secondOperand: Number(calculate(Number(state.firstOperand),
+            state.operator,
+            Number(currentNumber)).toFixed(2)),
+        firstOperand: currentNumber,
+    };
 }
 
-function btnClickOperatorIfOperatorIsNotEqual(){
-    firstOperand = resultElement.textContent;
+function btnClickOperatorIfOperatorIsNotEqual(state, currentNumber) {
+    return {
+        ...state,
+        firstOperand: currentNumber
+    };
 }
 
 function calculate(firstOperand, operator, secondOperand) {
