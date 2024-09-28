@@ -74,7 +74,7 @@ function btnClickNumber(state, currentValue, number) {
     return {
         ...state,
         firstOperand: number + currentValue
-    }
+    };
 }
 
 function btnClickDot(state, number) {
@@ -133,21 +133,19 @@ function btnClickOperatorIfOperatorIsEqual(state, currentNumber) {
         ...state,
         firstOperand: Number(calculate(Number(state.secondOperand),
             state.operator,
-            Number(currentNumber)).toFixed(2)),
-        secondOperand: currentNumber,
+            Number(currentNumber)).toFixed(2))
     };
 }
 
 function btnClickOperatorIfOperatorIsNotEqual(state, currentNumber) {
     if (state.operator !== '=' && state.operator !== null) {
+        const firstOperand = Number(calculate(Number(state.secondOperand),
+            state.operator,
+            Number(currentNumber)).toFixed(2));
         return {
             ...state,
-            firstOperand: Number(calculate(Number(state.secondOperand),
-                state.operator,
-                Number(currentNumber)).toFixed(2)),
-            secondOperand: Number(calculate(Number(state.secondOperand),
-                state.operator,
-                Number(currentNumber)).toFixed(2)),
+            firstOperand,
+            secondOperand: firstOperand,
         };
     }
     return {
