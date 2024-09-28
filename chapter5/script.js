@@ -117,7 +117,7 @@ function btnClickOperator(state, operator, currentNumber) {
         ...btnClickOperatorByOperatorIsEqual(state, operator, currentNumber),
         operator,
         reset: true
-    };;
+    };
 }
 
 function btnClickOperatorByOperatorIsEqual(state, operator, currentNumber) {
