@@ -113,12 +113,11 @@ function btnClickFunction(state, fn) {
 }
 
 function btnClickOperator(state, operator, currentNumber) {
-    state = {
+    return {
         ...btnClickOperatorByOperatorIsEqual(state, operator, currentNumber),
         operator,
         reset: true
-    };
-    return state;
+    };;
 }
 
 function btnClickOperatorByOperatorIsEqual(state, operator, currentNumber) {
@@ -138,6 +137,7 @@ function btnClickOperatorIfOperatorIsEqual(state, currentNumber) {
 }
 
 function btnClickOperatorIfOperatorIsNotEqual(state, currentNumber) {
+    // a (+ b) = c (+ d) = e (+ f) [- d]
     if (state.operator !== '=' && state.operator !== null) {
         const firstOperand = Number(calculate(Number(state.secondOperand),
             state.operator,
