@@ -53,6 +53,7 @@ function btnClickFunction(fn) {
     switch (fn) {
         case 'C':
             resultElement.textContent = 0;
+            firstOperand = null;
             break;
         default:
     }
