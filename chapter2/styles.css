@@ -79,6 +79,11 @@ body {
 
 .button {
     flex: 1;
+    /* 위와 같음 */
+    /* flex: 1 1 0%; */
+    /* 아래도 가능:1
+    width: 50%;
+    flex: 1 1 auto; */
     background-color: #505050;
     border: 0.5px solid #281e1e;
     user-select: none;
@@ -101,6 +106,8 @@ body {
 .zero {
     /* flex를 사용하지 않는 이유는 box-sizing을 사용하지 않는 이유는 box-sizing은 비율을 계산할 때 border를 무시하기 때문에*/
     min-width: 50%;
+    /* 아래도 가능:1
+    flex-shrink: 0; */
 }
 
 .button:hover {
