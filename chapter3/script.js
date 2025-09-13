@@ -12,7 +12,7 @@ function btnClick(event) {
     if (Array.from(event.target.classList).includes('dot')) {
         btnClickDot();
     }
-    if (Array.from(event.target.classList).includes('function')) {
+    if (event.target.classList.contains('function')) {
         btnClickFunction(event.target.textContent);
     }
     console.log(event.target.textContent);
